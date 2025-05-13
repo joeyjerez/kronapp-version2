@@ -451,54 +451,56 @@ export default function PatientProfileNew() {
           {/* Dashboard de salud */}
           <div className="mb-8">
             <h2 className="text-lg font-medium text-[--blue-main] mb-4">Resumen de Salud</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
-                <CardContent className="p-5 flex flex-col items-center">
-                  <svg className="h-12 w-12 mb-2 text-[--red-alert]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M18 8a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v1.5h12V8Z"></path>
-                    <path d="M6 9.5V20a1 1 0 0 0 1 1h2V14a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v7h2a1 1 0 0 0 1-1V9.5"></path>
-                    <path d="M9 21v-7h6v7"></path>
-                  </svg>
-                  <h3 className="font-medium text-[--black-soft]">Glucosa</h3>
-                  <div className="flex items-baseline mt-1">
-                    <span className="text-2xl font-bold text-[--red-alert]">164</span>
-                    <span className="ml-1 text-xs text-[--gray-medium]">mg/dL</span>
+            <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+              <CardContent className="p-5">
+                <div className="grid md:grid-cols-3 gap-6">
+                  {/* Indicador de glucosa */}
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center border-4 border-[--yellow-warning]">
+                      <span className="text-lg font-bold text-[--black-soft]">145</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-[--black-soft]">Glucosa</h3>
+                      <p className="text-sm text-[--gray-medium]">Promedio: 145 mg/dL</p>
+                      <div className="mt-1 flex items-center gap-1">
+                        <div className="w-2 h-2 rounded-full bg-[--yellow-warning]"></div>
+                        <span className="text-xs text-[--yellow-warning] font-medium">Elevada</span>
+                      </div>
+                    </div>
                   </div>
-                  <p className="mt-1 text-xs text-[--gray-medium]">Última medición: Hoy 09:34 AM</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
-                <CardContent className="p-5 flex flex-col items-center">
-                  <svg className="h-12 w-12 mb-2 text-[--yellow-warning]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  <h3 className="font-medium text-[--black-soft]">Presión arterial</h3>
-                  <div className="flex items-baseline mt-1">
-                    <span className="text-2xl font-bold text-[--yellow-warning]">135/85</span>
-                    <span className="ml-1 text-xs text-[--gray-medium]">mmHg</span>
+                  
+                  {/* Indicador de presión arterial */}
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 rounded-full flex flex-col items-center justify-center border-4 border-[--green-success]">
+                      <span className="text-sm font-bold text-[--black-soft]">125/82</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-[--black-soft]">Presión arterial</h3>
+                      <p className="text-sm text-[--gray-medium]">Promedio: 125/82 mmHg</p>
+                      <div className="mt-1 flex items-center gap-1">
+                        <div className="w-2 h-2 rounded-full bg-[--green-success]"></div>
+                        <span className="text-xs text-[--green-success] font-medium">Normal</span>
+                      </div>
+                    </div>
                   </div>
-                  <p className="mt-1 text-xs text-[--gray-medium]">Última medición: Hoy 09:36 AM</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
-                <CardContent className="p-5 flex flex-col items-center">
-                  <svg className="h-12 w-12 mb-2 text-[--red-alert]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-                    <path d="M2 10h20"></path>
-                  </svg>
-                  <h3 className="font-medium text-[--black-soft]">IMC</h3>
-                  <div className="flex items-baseline mt-1">
-                    <span className="text-2xl font-bold text-[--red-alert]">31.1</span>
-                    <span className="ml-1 text-xs text-[--gray-medium]">kg/m²</span>
+                  
+                  {/* Indicador de IMC */}
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center border-4 border-[--red-alert]">
+                      <span className="text-lg font-bold text-[--black-soft]">31.2</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-[--black-soft]">IMC</h3>
+                      <p className="text-sm text-[--gray-medium]">Peso: 95 kg, Altura: 175 cm</p>
+                      <div className="mt-1 flex items-center gap-1">
+                        <div className="w-2 h-2 rounded-full bg-[--red-alert]"></div>
+                        <span className="text-xs text-[--red-alert] font-medium">Obesidad</span>
+                      </div>
+                    </div>
                   </div>
-                  <p className="mt-1 text-xs text-[--gray-medium]">Última actualización: 10 mayo 2023</p>
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
           
           {/* Gráficos de seguimiento */}

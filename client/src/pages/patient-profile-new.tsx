@@ -390,62 +390,103 @@ export default function PatientProfileNew() {
           {/* Datos del paciente */}
           <div className="mb-8">
             <h2 className="text-lg font-medium text-[--blue-main] mb-4">Datos del paciente</h2>
-            
-            <Card className="shadow-sm">
-              <CardContent className="p-5">
-                <div className="flex flex-col sm:flex-row gap-6">
-                  <div className="sm:w-1/4 flex flex-col items-center justify-center">
-                    <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-full bg-[--blue-main] flex items-center justify-center text-white text-4xl font-semibold shadow-sm">
-                      {patientData.name[0]}{patientData.lastName[0]}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <div className="flex items-center">
+                    <div className="w-14 h-14 flex-shrink-0 rounded-full bg-[--blue-main] flex items-center justify-center text-xl font-bold text-white shadow-sm">
+                      {patientData.name.charAt(0)}{patientData.lastName.charAt(0)}
                     </div>
-                    <h3 className="font-medium text-[--black-soft]">{patientData.name} {patientData.lastName}</h3>
-                    <p className="text-sm text-[--gray-medium]">{patientData.age} años</p>
-                  </div>
-                  
-                  <div className="sm:w-3/4 space-y-6">
-                    <div>
-                      <h3 className="text-sm font-medium text-[--blue-main] mb-2">Información de Contacto</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                          <p className="text-xs text-[--gray-medium]">Teléfono</p>
-                          <p className="text-sm font-medium text-[--black-soft]">{patientData.phone}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-[--gray-medium]">Email</p>
-                          <p className="text-sm font-medium text-[--black-soft]">{patientData.email}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-[--gray-medium]">Dirección</p>
-                          <p className="text-sm font-medium text-[--black-soft]">{patientData.address}</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="text-sm font-medium text-[--blue-main] mb-2">Datos Basales</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div>
-                          <p className="text-xs text-[--gray-medium]">Peso</p>
-                          <p className="text-sm font-medium text-[--black-soft]">{patientData.weight} kg</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-[--gray-medium]">Altura</p>
-                          <p className="text-sm font-medium text-[--black-soft]">{patientData.height} cm</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-[--gray-medium]">IMC</p>
-                          <p className="text-sm font-medium text-[--black-soft]">{(patientData.weight / ((patientData.height/100) * (patientData.height/100))).toFixed(1)}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-[--gray-medium]">Fumador</p>
-                          <p className="text-sm font-medium text-[--black-soft]">{patientData.isSmoker ? "Sí" : "No"}</p>
-                        </div>
-                      </div>
+                    <div className="ml-4">
+                      <h3 className="font-medium text-[--black-soft]">{patientData.name} {patientData.lastName}</h3>
+                      <p className="text-sm text-[--gray-medium]">{patientData.age} años</p>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <h3 className="text-sm font-medium text-[--blue-main] mb-2">Información de Contacto</h3>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <svg className="mr-2 h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                      </svg>
+                      <span className="text-[--black-soft]">{patientData.phone}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg className="mr-2 h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                      <span className="text-[--black-soft]">{patientData.email}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg className="mr-2 h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                      <span className="text-[--black-soft]">{patientData.address}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <h3 className="text-sm font-medium text-[--blue-main] mb-2">Datos Basales</h3>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <svg className="mr-2 h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 20h20"></path>
+                        <path d="M6 16V4"></path>
+                        <path d="M10 16V10"></path>
+                        <path d="M14 16v-6"></path>
+                        <path d="M18 16V8"></path>
+                      </svg>
+                      <span className="text-[--black-soft]">Peso: {patientData.weight} kg</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg className="mr-2 h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="12" y1="2" x2="12" y2="6"></line>
+                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                      </svg>
+                      <span className="text-[--black-soft]">Estatura: {patientData.height} cm</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg className="mr-2 h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 10h-4V4h-4v6H6l6 6 6-6z"></path>
+                        <path d="M6 16v4h12v-4"></path>
+                      </svg>
+                      <span className="text-[--black-soft]">Fumador: {patientData.isSmoker ? 'Sí' : 'No'}</span>
+                    </div>
+                    <div className="flex items-center text-sm mt-1">
+                      <svg className="mr-2 h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                      </svg>
+                      <span className="text-[--black-soft]">Seguro: {patientData.insurance}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <Button 
+                className="bg-[--blue-main] hover:bg-[--blue-main]/90 text-white border-none shadow-sm"
+                onClick={() => setShowEditProfileDialog(true)}
+              >
+                Editar perfil
+              </Button>
+              <Button className="bg-white hover:bg-[--blue-light] text-[--blue-main] border border-[--blue-main]/30 shadow-sm">Formulario</Button>
+            </div>
           </div>
           
           {/* Dashboard de salud */}

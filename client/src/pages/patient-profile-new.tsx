@@ -704,6 +704,166 @@ export default function PatientProfileNew() {
           
         </div>
       </div>
+
+      {/* Diálogos de edición y configuración */}
+      {/* Diálogo para editar perfil */}
+      <Dialog open={showEditProfileDialog} onOpenChange={setShowEditProfileDialog}>
+        <DialogContent className="max-w-[90vw] sm:max-w-[500px] border border-[--blue-light] shadow-lg overflow-y-auto max-h-[90vh]">
+          <DialogHeader>
+            <DialogTitle className="text-[--blue-main] text-xl">Editar Perfil</DialogTitle>
+            <DialogDescription className="text-[--gray-medium]">
+              Actualiza tus datos personales y de contacto.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-5 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-[--black-soft]">Nombre</Label>
+                <Input 
+                  id="name" 
+                  value={patientData.name} 
+                  onChange={(e) => setPatientData({...patientData, name: e.target.value})}
+                  className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastname" className="text-[--black-soft]">Apellido</Label>
+                <Input 
+                  id="lastname" 
+                  value={patientData.lastName} 
+                  onChange={(e) => setPatientData({...patientData, lastName: e.target.value})}
+                  className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="age" className="text-[--black-soft]">Edad</Label>
+              <Input 
+                id="age" 
+                type="number" 
+                value={patientData.age} 
+                onChange={(e) => setPatientData({...patientData, age: parseInt(e.target.value) || 0})}
+                className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-[--black-soft]">Correo electrónico</Label>
+              <Input 
+                id="email" 
+                type="email" 
+                value={patientData.email} 
+                onChange={(e) => setPatientData({...patientData, email: e.target.value})}
+                className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-[--black-soft]">Teléfono</Label>
+              <Input 
+                id="phone" 
+                value={patientData.phone}
+                onChange={(e) => setPatientData({...patientData, phone: e.target.value})}
+                className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="address" className="text-[--black-soft]">Dirección</Label>
+              <Input 
+                id="address" 
+                value={patientData.address}
+                onChange={(e) => setPatientData({...patientData, address: e.target.value})}
+                className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+              />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="weight" className="text-[--black-soft]">Peso (kg)</Label>
+                <Input 
+                  id="weight" 
+                  type="number" 
+                  value={patientData.weight}
+                  onChange={(e) => setPatientData({...patientData, weight: parseInt(e.target.value) || 0})}
+                  className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="height" className="text-[--black-soft]">Estatura (cm)</Label>
+                <Input 
+                  id="height" 
+                  type="number" 
+                  value={patientData.height}
+                  onChange={(e) => setPatientData({...patientData, height: parseInt(e.target.value) || 0})}
+                  className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="insurance" className="text-[--black-soft]">Seguro Médico</Label>
+              <Input 
+                id="insurance" 
+                value={patientData.insurance}
+                onChange={(e) => setPatientData({...patientData, insurance: e.target.value})}
+                className="border-[--blue-light] focus-visible:ring-[--blue-main]" 
+              />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Switch 
+                id="smoker" 
+                checked={patientData.isSmoker}
+                onCheckedChange={(checked) => setPatientData({...patientData, isSmoker: checked})}
+              />
+              <Label htmlFor="smoker" className="text-[--black-soft]">Fumador</Label>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowEditProfileDialog(false)} 
+              className="border-[--blue-main]/30 text-[--blue-main] hover:bg-[--blue-light]/20"
+            >
+              Cancelar
+            </Button>
+            <Button 
+              onClick={handleSaveProfile}
+              className="bg-[--blue-main] hover:bg-[--blue-main]/90 text-white"
+            >
+              Guardar cambios
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Diálogo para confirmar cierre de sesión */}
+      <Dialog open={showConfirmLogoutDialog} onOpenChange={setShowConfirmLogoutDialog}>
+        <DialogContent className="sm:max-w-[425px] border border-[--red-alert]/20 shadow-lg">
+          <DialogHeader>
+            <DialogTitle className="text-[--red-alert] text-xl">Confirmar cierre de sesión</DialogTitle>
+            <DialogDescription className="text-[--gray-medium]">
+              ¿Estás seguro de que deseas cerrar la sesión?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mt-4">
+            <Button variant="outline" onClick={() => setShowConfirmLogoutDialog(false)} className="border-[--gray-medium]/30 text-[--gray-medium] hover:bg-[--gray-light]">
+              Cancelar
+            </Button>
+            <Button 
+              onClick={() => {
+                // Aquí iría la lógica para cerrar sesión, por ahora solo vamos a la página de login
+                window.location.href = "/auth";
+              }}
+              className="bg-[--red-alert] hover:bg-[--red-alert]/90 text-white"
+            >
+              Cerrar sesión
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

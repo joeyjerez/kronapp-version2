@@ -772,7 +772,142 @@ export default function PatientProfileNew() {
             </div>
           </div>
           
-{/* Sección de Medicación Activa - OCULTA */}
+          {/* Medicación activa */}
+          <div className="mb-8">
+            <h2 className="text-lg font-medium text-[--blue-main] mb-4">Medicación Activa</h2>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <h3 className="text-sm font-medium text-[--blue-main] mb-4">Medicamentos para Diabetes</h3>
+                  
+                  <div className="space-y-4">
+                    {medications.filter(med => med.category === "diabetes").map(medication => (
+                      <div key={medication.id} className="flex items-start">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[--blue-light] flex items-center justify-center">
+                          <svg className="h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                          </svg>
+                        </div>
+                        <div className="ml-3 flex-1">
+                          <div className="flex justify-between">
+                            <h4 className="text-sm font-medium text-[--black-soft]">{medication.name}</h4>
+                            <Badge 
+                              className={
+                                medication.adherence >= 90 
+                                ? "bg-[--green-success]/90" 
+                                : medication.adherence >= 70 
+                                ? "bg-[--yellow-warning]/90" 
+                                : "bg-[--red-alert]/90"
+                              }
+                            >
+                              {medication.adherence}% Adherencia
+                            </Badge>
+                          </div>
+                          <p className="mt-1 text-xs text-[--gray-medium]">{medication.dosage}</p>
+                          <div className="mt-2 text-xs flex items-center text-[--blue-main]">
+                            <svg className="mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            Próxima dosis: {medication.nextDose}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    
+                    {medications.filter(med => med.category === "diabetes").length === 0 && (
+                      <div className="flex items-center justify-center py-4 text-[--gray-medium] text-sm">
+                        No hay medicamentos para diabetes registrados
+                      </div>
+                    )}
+                    
+                    <Button 
+                      variant="outline" 
+                      className="w-full mt-4 border-dashed border-[--blue-main] text-[--blue-main] hover:bg-[--blue-light]/10"
+                      onClick={() => {
+                        setNewMedication({...newMedication, category: "diabetes"});
+                        setShowAddMedicationDialog(true);
+                      }}
+                    >
+                      <svg className="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                      Agregar medicamento
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <h3 className="text-sm font-medium text-[--blue-main] mb-4">Medicamentos para Hipertensión</h3>
+                  
+                  <div className="space-y-4">
+                    {medications.filter(med => med.category === "hipertension").map(medication => (
+                      <div key={medication.id} className="flex items-start">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[--blue-light] flex items-center justify-center">
+                          <svg className="h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                          </svg>
+                        </div>
+                        <div className="ml-3 flex-1">
+                          <div className="flex justify-between">
+                            <h4 className="text-sm font-medium text-[--black-soft]">{medication.name}</h4>
+                            <Badge 
+                              className={
+                                medication.adherence >= 90 
+                                ? "bg-[--green-success]/90" 
+                                : medication.adherence >= 70 
+                                ? "bg-[--yellow-warning]/90" 
+                                : "bg-[--red-alert]/90"
+                              }
+                            >
+                              {medication.adherence}% Adherencia
+                            </Badge>
+                          </div>
+                          <p className="mt-1 text-xs text-[--gray-medium]">{medication.dosage}</p>
+                          <div className="mt-2 text-xs flex items-center text-[--blue-main]">
+                            <svg className="mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            Próxima dosis: {medication.nextDose}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    
+                    {medications.filter(med => med.category === "hipertension").length === 0 && (
+                      <div className="flex items-center justify-center py-4 text-[--gray-medium] text-sm">
+                        No hay medicamentos para hipertensión registrados
+                      </div>
+                    )}
+                    
+                    <Button 
+                      variant="outline" 
+                      className="w-full mt-4 border-dashed border-[--blue-main] text-[--blue-main] hover:bg-[--blue-light]/10"
+                      onClick={() => {
+                        setNewMedication({...newMedication, category: "hipertension"});
+                        setShowAddMedicationDialog(true);
+                      }}
+                    >
+                      <svg className="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                      Agregar medicamento
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
           
           {/* Panel de factores de riesgo */}
           <div className="mb-8">
@@ -866,7 +1001,94 @@ export default function PatientProfileNew() {
             </Card>
           </div>
           
-          {/* Sección de Calendario de Atención y Prescripciones - OCULTA */}
+          {/* Calendario de próximas citas */}
+          <div className="mb-8">
+            <h2 className="text-lg font-medium text-[--blue-main] mb-4">Calendario de Atención</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <h3 className="text-sm font-medium text-[--blue-main] mb-4">Próximas citas</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-10 w-10 bg-[--blue-main] rounded-lg flex items-center justify-center text-white font-medium">
+                        20
+                        <span className="text-[8px] ml-0.5">May</span>
+                      </div>
+                      <div className="ml-3">
+                        <h4 className="text-sm font-medium text-[--black-soft]">Control de Diabetes</h4>
+                        <p className="text-xs text-[--gray-medium]">Dr. García - 10:30 AM</p>
+                        <div className="mt-2">
+                          <Badge className="bg-[--blue-light] text-[--blue-main]">Confirmada</Badge>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-10 w-10 bg-[--blue-main] rounded-lg flex items-center justify-center text-white font-medium">
+                        02
+                        <span className="text-[8px] ml-0.5">Jun</span>
+                      </div>
+                      <div className="ml-3">
+                        <h4 className="text-sm font-medium text-[--black-soft]">Exámenes de Laboratorio</h4>
+                        <p className="text-xs text-[--gray-medium]">Centro Médico - 8:00 AM</p>
+                        <div className="mt-2">
+                          <Badge className="bg-[--yellow-warning]/20 text-[--yellow-warning]">Por confirmar</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <h3 className="text-sm font-medium text-[--blue-main] mb-4">Prescripciones y trámites</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[--blue-light] flex items-center justify-center">
+                        <svg className="h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                          <line x1="9" y1="3" x2="9" y2="21"></line>
+                        </svg>
+                      </div>
+                      <div className="ml-3">
+                        <h4 className="text-sm font-medium text-[--black-soft]">Renovar prescripción</h4>
+                        <p className="text-xs text-[--gray-medium]">Losartán - Vence el 25 de Mayo</p>
+                        <div className="mt-2">
+                          <Button variant="outline" size="sm" className="h-7 text-xs border-[--blue-main] text-[--blue-main] hover:bg-[--blue-light]/20">
+                            Solicitar renovación
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[--cyan-info]/20 flex items-center justify-center">
+                        <svg className="h-5 w-5 text-[--cyan-info]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M2 9h20"></path>
+                          <path d="M15 3h5v18h-5z"></path>
+                          <path d="M4 3h5v18H4z"></path>
+                          <path d="M9 3h6v18H9z"></path>
+                        </svg>
+                      </div>
+                      <div className="ml-3">
+                        <h4 className="text-sm font-medium text-[--black-soft]">Resultado de análisis</h4>
+                        <p className="text-xs text-[--gray-medium]">Hemoglobina glicosilada - Disponible</p>
+                        <div className="mt-2">
+                          <Button variant="outline" size="sm" className="h-7 text-xs border-[--cyan-info] text-[--cyan-info] hover:bg-[--cyan-info]/10">
+                            Ver resultado
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
           
           {/* Recursos educativos */}
           <div className="mb-8">
@@ -1075,9 +1297,340 @@ export default function PatientProfileNew() {
             </Tabs>
           </div>
           
-          {/* Sección de Actividad Física - OCULTA */}
+          {/* Dashboard de actividad física */}
+          <div className="mb-8">
+            <h2 className="text-lg font-medium text-[--blue-main] mb-4">Actividad Física</h2>
+            
+            <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+              <CardContent className="p-5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <h3 className="text-sm font-medium text-[--black-soft] mb-4">Progreso semanal</h3>
+                    
+                    <div className="h-40 flex items-end justify-between gap-2">
+                      {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((dia, index) => (
+                        <div key={index} className="flex flex-col items-center w-full">
+                          <div 
+                            className={`w-full rounded-t-sm ${
+                              index < 4 
+                                ? 'bg-[--blue-main]' 
+                                : (index === 4 ? 'bg-[--blue-light]' : 'bg-gray-200')
+                            }`} 
+                            style={{ 
+                              height: `${
+                                index === 0 ? '60%' : 
+                                index === 1 ? '85%' : 
+                                index === 2 ? '50%' : 
+                                index === 3 ? '75%' : 
+                                index === 4 ? '20%' : '0%'
+                              }`
+                            }}
+                          ></div>
+                          <span className="text-xs text-[--gray-medium] mt-1">{dia}</span>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="mt-3 text-center">
+                      <p className="text-sm text-[--black-soft]">4 de 7 días completados</p>
+                      <p className="text-xs text-[--gray-medium]">Meta: 30 min/día, 5 días/semana</p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-sm font-medium text-[--black-soft] mb-4">Resumen de actividades</h3>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="w-8 h-8 rounded-full bg-[--blue-light] flex items-center justify-center">
+                            <svg className="h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="m18 14-6-6-6 6"></path>
+                            </svg>
+                          </div>
+                          <span className="ml-2 text-sm text-[--black-soft]">Caminata</span>
+                        </div>
+                        <span className="text-sm font-medium text-[--black-soft]">90 min</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="w-8 h-8 rounded-full bg-[--blue-light] flex items-center justify-center">
+                            <svg className="h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <path d="m16 12-4-4-4 4M12 8v8"></path>
+                            </svg>
+                          </div>
+                          <span className="ml-2 text-sm text-[--black-soft]">Bicicleta</span>
+                        </div>
+                        <span className="text-sm font-medium text-[--black-soft]">45 min</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="w-8 h-8 rounded-full bg-[--blue-light] flex items-center justify-center">
+                            <svg className="h-4 w-4 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                          </div>
+                          <span className="ml-2 text-sm text-[--black-soft]">Natación</span>
+                        </div>
+                        <span className="text-sm font-medium text-[--black-soft]">30 min</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-3 pt-3 border-t border-gray-200">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-[--black-soft]">Total semanal</span>
+                        <span className="text-sm font-medium text-[--blue-main]">165 min</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-sm font-medium text-[--black-soft] mb-4">Recomendaciones personalizadas</h3>
+                    
+                    <div className="space-y-3">
+                      <div className="flex">
+                        <div className="flex-shrink-0">
+                          <svg className="h-5 w-5 text-[--green-success]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                            <path d="m9 12 2 2 4-4"></path>
+                          </svg>
+                        </div>
+                        <p className="ml-2 text-xs text-[--gray-medium]">Continúa con tu rutina de caminata diaria, excelente para controlar tu glucosa</p>
+                      </div>
+                      
+                      <div className="flex">
+                        <div className="flex-shrink-0">
+                          <svg className="h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                            <path d="M12 8v4"></path>
+                            <path d="M12 16h.01"></path>
+                          </svg>
+                        </div>
+                        <p className="ml-2 text-xs text-[--gray-medium]">Considera agregar ejercicios de fuerza 2 veces por semana para mejorar tu sensibilidad a la insulina</p>
+                      </div>
+                      
+                      <div className="flex">
+                        <div className="flex-shrink-0">
+                          <svg className="h-5 w-5 text-[--yellow-warning]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                            <path d="M12 8v4"></path>
+                            <path d="M12 16h.01"></path>
+                          </svg>
+                        </div>
+                        <p className="ml-2 text-xs text-[--gray-medium]">No olvides medir tu glucosa antes y después del ejercicio para entender cómo afecta a tu cuerpo</p>
+                      </div>
+                      
+                      <div className="mt-4">
+                        <Button className="w-full bg-[--blue-main] hover:bg-[--blue-main]/90 text-white" size="sm">Ver plan personalizado</Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
           
-          {/* Sección de Alimentación e Impacto en Glucosa - OCULTA */}
+          {/* Integración de datos dietéticos */}
+          <div className="mb-8">
+            <h2 className="text-lg font-medium text-[--blue-main] mb-4">Alimentación e Impacto en Glucosa</h2>
+            
+            <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+              <CardContent className="p-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-sm font-medium text-[--black-soft] mb-4">Registro de comidas recientes</h3>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[--blue-light] flex items-center justify-center">
+                          <svg className="h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M6 8h12"></path>
+                            <path d="M8 2h8"></path>
+                            <path d="M12 19v-5"></path>
+                            <path d="M18 19c0-4.4-6-3.1-6-8"></path>
+                            <rect x="4" y="10" width="16" height="2" rx="1" ry="1"></rect>
+                          </svg>
+                        </div>
+                        <div className="ml-3 flex-1">
+                          <div className="flex justify-between">
+                            <h4 className="text-sm font-medium text-[--black-soft]">Desayuno</h4>
+                            <p className="text-xs text-[--gray-medium]">7:30 AM</p>
+                          </div>
+                          <p className="mt-1 text-xs text-[--gray-medium]">Avena con frutas, yogurt natural y té verde</p>
+                          <div className="mt-2 flex items-center">
+                            <Badge className="bg-[--green-success]/20 text-[--green-success] mr-2">
+                              +15 mg/dL
+                            </Badge>
+                            <span className="text-xs text-[--gray-medium]">Glucosa post: 130 mg/dL</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[--blue-light] flex items-center justify-center">
+                          <svg className="h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"></path>
+                            <line x1="6" y1="17" x2="18" y2="17"></line>
+                          </svg>
+                        </div>
+                        <div className="ml-3 flex-1">
+                          <div className="flex justify-between">
+                            <h4 className="text-sm font-medium text-[--black-soft]">Almuerzo</h4>
+                            <p className="text-xs text-[--gray-medium]">1:00 PM</p>
+                          </div>
+                          <p className="mt-1 text-xs text-[--gray-medium]">Ensalada de pollo, arroz integral y vegetales</p>
+                          <div className="mt-2 flex items-center">
+                            <Badge className="bg-[--yellow-warning]/20 text-[--yellow-warning] mr-2">
+                              +35 mg/dL
+                            </Badge>
+                            <span className="text-xs text-[--gray-medium]">Glucosa post: 150 mg/dL</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[--blue-light] flex items-center justify-center">
+                          <svg className="h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2v2"></path>
+                            <path d="M12 8v2"></path>
+                            <path d="M12 14v2"></path>
+                            <path d="M12 20v2"></path>
+                            <path d="M18.4 4.6 16.3 6.7"></path>
+                            <path d="M7.8 7.7 5.6 9.9"></path>
+                            <path d="M16.3 17.3l2.1 2.1"></path>
+                            <path d="M5.6 14.1l2.2 2.2"></path>
+                            <path d="M2 12h2"></path>
+                            <path d="M8 12h2"></path>
+                            <path d="M14 12h2"></path>
+                            <path d="M20 12h2"></path>
+                          </svg>
+                        </div>
+                        <div className="ml-3 flex-1">
+                          <div className="flex justify-between">
+                            <h4 className="text-sm font-medium text-[--black-soft]">Merienda</h4>
+                            <p className="text-xs text-[--gray-medium]">4:30 PM</p>
+                          </div>
+                          <p className="mt-1 text-xs text-[--gray-medium]">Nueces mixtas y manzana</p>
+                          <div className="mt-2 flex items-center">
+                            <Badge className="bg-[--green-success]/20 text-[--green-success] mr-2">
+                              +10 mg/dL
+                            </Badge>
+                            <span className="text-xs text-[--gray-medium]">Glucosa post: 125 mg/dL</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 flex justify-end">
+                      <Button size="sm" className="bg-[--blue-main] hover:bg-[--blue-main]/90 text-white">
+                        Registrar comida
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-sm font-medium text-[--black-soft] mb-4">Sugerencias alimentarias</h3>
+                    
+                    <div className="space-y-4">
+                      <div className="p-3 bg-[--green-success]/10 rounded-lg">
+                        <h4 className="text-sm font-medium text-[--green-success] mb-2">
+                          Alimentos recomendados
+                        </h4>
+                        <ul className="space-y-2">
+                          <li className="flex items-center text-xs text-[--gray-medium]">
+                            <svg className="h-4 w-4 text-[--green-success] mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                              <path d="m9 12 2 2 4-4"></path>
+                            </svg>
+                            Vegetales de hoja verde (espinacas, kale, lechuga)
+                          </li>
+                          <li className="flex items-center text-xs text-[--gray-medium]">
+                            <svg className="h-4 w-4 text-[--green-success] mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                              <path d="m9 12 2 2 4-4"></path>
+                            </svg>
+                            Proteínas magras (pollo sin piel, pescado, tofu)
+                          </li>
+                          <li className="flex items-center text-xs text-[--gray-medium]">
+                            <svg className="h-4 w-4 text-[--green-success] mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                              <path d="m9 12 2 2 4-4"></path>
+                            </svg>
+                            Grasas saludables (aguacate, aceite de oliva, nueces)
+                          </li>
+                        </ul>
+                      </div>
+                      
+                      <div className="p-3 bg-[--yellow-warning]/10 rounded-lg">
+                        <h4 className="text-sm font-medium text-[--yellow-warning] mb-2">
+                          Alimentos con moderación
+                        </h4>
+                        <ul className="space-y-2">
+                          <li className="flex items-center text-xs text-[--gray-medium]">
+                            <svg className="h-4 w-4 text-[--yellow-warning] mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                              <path d="M12 8v4"></path>
+                              <path d="M12 16h.01"></path>
+                            </svg>
+                            Carbohidratos complejos (arroz integral, quinoa)
+                          </li>
+                          <li className="flex items-center text-xs text-[--gray-medium]">
+                            <svg className="h-4 w-4 text-[--yellow-warning] mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                              <path d="M12 8v4"></path>
+                              <path d="M12 16h.01"></path>
+                            </svg>
+                            Frutas enteras (manzanas, peras, bayas)
+                          </li>
+                        </ul>
+                      </div>
+                      
+                      <div className="p-3 bg-[--red-alert]/10 rounded-lg">
+                        <h4 className="text-sm font-medium text-[--red-alert] mb-2">
+                          Alimentos a evitar
+                        </h4>
+                        <ul className="space-y-2">
+                          <li className="flex items-center text-xs text-[--gray-medium]">
+                            <svg className="h-4 w-4 text-[--red-alert] mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                              <path d="m15 9-6 6"></path>
+                              <path d="m9 9 6 6"></path>
+                            </svg>
+                            Azúcares refinados (dulces, postres, bebidas azucaradas)
+                          </li>
+                          <li className="flex items-center text-xs text-[--gray-medium]">
+                            <svg className="h-4 w-4 text-[--red-alert] mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                              <path d="m15 9-6 6"></path>
+                              <path d="m9 9 6 6"></path>
+                            </svg>
+                            Carbohidratos simples (pan blanco, arroz blanco)
+                          </li>
+                          <li className="flex items-center text-xs text-[--gray-medium]">
+                            <svg className="h-4 w-4 text-[--red-alert] mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                              <path d="m15 9-6 6"></path>
+                              <path d="m9 9 6 6"></path>
+                            </svg>
+                            Alimentos procesados con alto contenido de sodio
+                          </li>
+                        </ul>
+                      </div>
+                      
+                      <div className="mt-2">
+                        <Button size="sm" variant="outline" className="w-full border-[--blue-main] text-[--blue-main] hover:bg-[--blue-light]/20">
+                          Ver plan de alimentación personalizado
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Diálogo para editar perfil */}

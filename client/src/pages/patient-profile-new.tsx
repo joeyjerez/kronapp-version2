@@ -627,6 +627,153 @@ export default function PatientProfileNew() {
             </div>
           </div>
           
+          {/* Metas y tendencias */}
+          <div className="mb-8">
+            <h2 className="text-lg font-medium text-[--blue-main] mb-4">Metas y Tendencias</h2>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              {/* Gráfico de tendencia de glucosa */}
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="font-medium text-[--black-soft]">Glucosa</h3>
+                    <div className="flex items-center">
+                      <svg 
+                        className="h-5 w-5 text-[--green-success]" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      >
+                        <path d="m6 9 6-6 6 6"/>
+                        <path d="M6 12h12"/>
+                        <path d="m6 15 6 6 6-6"/>
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  {/* Mini gráfico de tendencia */}
+                  <div className="h-12 w-full bg-white rounded mb-3 p-2 border border-[--blue-light]">
+                    <div className="flex items-end justify-between h-full space-x-1">
+                      <div className="w-1/7 h-[30%] bg-[--blue-main] rounded-t"></div>
+                      <div className="w-1/7 h-[50%] bg-[--blue-main] rounded-t"></div>
+                      <div className="w-1/7 h-[40%] bg-[--blue-main] rounded-t"></div>
+                      <div className="w-1/7 h-[60%] bg-[--blue-main] rounded-t"></div>
+                      <div className="w-1/7 h-[70%] bg-[--blue-main] rounded-t"></div>
+                      <div className="w-1/7 h-[60%] bg-[--blue-main] rounded-t"></div>
+                      <div className="w-1/7 h-[80%] bg-[--blue-main] rounded-t"></div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-sm text-[--gray-medium]">Meta: 120 mg/dL</p>
+                      <div className="mt-1">
+                        <Progress value={65} className="h-2 w-36" />
+                      </div>
+                    </div>
+                    <Badge className="bg-[--yellow-warning] text-white">+25 mg/dL</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Gráfico de tendencia de presión arterial */}
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="font-medium text-[--black-soft]">Presión Arterial</h3>
+                    <div className="flex items-center">
+                      <svg 
+                        className="h-5 w-5 text-[--red-alert]" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      >
+                        <path d="m18 15-6-6-6 6"/>
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  {/* Mini gráfico de tendencia */}
+                  <div className="h-12 w-full bg-white rounded mb-3 p-2 border border-[--blue-light]">
+                    <div className="flex items-end justify-between h-full space-x-1">
+                      <div className="w-1/7 h-[50%] bg-[--red-alert] rounded-t"></div>
+                      <div className="w-1/7 h-[60%] bg-[--red-alert] rounded-t"></div>
+                      <div className="w-1/7 h-[65%] bg-[--red-alert] rounded-t"></div>
+                      <div className="w-1/7 h-[70%] bg-[--red-alert] rounded-t"></div>
+                      <div className="w-1/7 h-[60%] bg-[--red-alert] rounded-t"></div>
+                      <div className="w-1/7 h-[75%] bg-[--red-alert] rounded-t"></div>
+                      <div className="w-1/7 h-[80%] bg-[--red-alert] rounded-t"></div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-sm text-[--gray-medium]">Meta: 120/80 mmHg</p>
+                      <div className="mt-1">
+                        <Progress value={40} className="h-2 w-36" />
+                      </div>
+                    </div>
+                    <Badge className="bg-[--red-alert] text-white">+10 mmHg</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Gráfico de tendencia de peso */}
+              <Card className="shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <CardContent className="p-5">
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="font-medium text-[--black-soft]">Peso</h3>
+                    <div className="flex items-center">
+                      <svg 
+                        className="h-5 w-5 text-[--green-success]" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      >
+                        <path d="m6 9 6-6 6 6"/>
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  {/* Mini gráfico de tendencia */}
+                  <div className="h-12 w-full bg-white rounded mb-3 p-2 border border-[--blue-light]">
+                    <div className="flex items-end justify-between h-full space-x-1">
+                      <div className="w-1/7 h-[70%] bg-[--green-success] rounded-t"></div>
+                      <div className="w-1/7 h-[65%] bg-[--green-success] rounded-t"></div>
+                      <div className="w-1/7 h-[60%] bg-[--green-success] rounded-t"></div>
+                      <div className="w-1/7 h-[55%] bg-[--green-success] rounded-t"></div>
+                      <div className="w-1/7 h-[50%] bg-[--green-success] rounded-t"></div>
+                      <div className="w-1/7 h-[45%] bg-[--green-success] rounded-t"></div>
+                      <div className="w-1/7 h-[40%] bg-[--green-success] rounded-t"></div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-sm text-[--gray-medium]">Meta: 80 kg</p>
+                      <div className="mt-1">
+                        <Progress value={20} className="h-2 w-36" />
+                      </div>
+                    </div>
+                    <Badge className="bg-[--green-success] text-white">-2.5 kg</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
           {/* Panel de factores de riesgo */}
           <div className="mb-8">
             <h2 className="text-lg font-medium text-[--blue-main] mb-4">Factores de Riesgo Cardiovascular</h2>

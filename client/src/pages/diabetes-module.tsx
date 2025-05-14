@@ -381,16 +381,16 @@ export default function DiabetesModule() {
                 )}
               </div>
 
-              <div className="px-4 py-3 flex justify-between bg-[--blue-light]/10">
+              <div className="px-3 sm:px-4 py-3 flex justify-between items-center bg-[--blue-light]/10">
                 <Button 
                   size="sm" 
                   onClick={goToPreviousWeek}
-                  className="rounded-full w-9 h-9 p-0 border border-[--blue-main]/30 bg-white text-[--blue-main] hover:bg-[--blue-light]"
+                  className="rounded-full w-8 h-8 sm:w-9 sm:h-9 p-0 border border-[--blue-main]/30 bg-white text-[--blue-main] hover:bg-[--blue-light]"
                 >
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
+                    width="14" 
+                    height="14" 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     stroke="currentColor" 
@@ -404,15 +404,17 @@ export default function DiabetesModule() {
                   <span className="sr-only">Anterior</span>
                 </Button>
                 
+                <span className="text-xs sm:text-sm text-[--gray-medium]">Navegar por semanas</span>
+                
                 <Button 
                   size="sm" 
                   onClick={goToNextWeek}
-                  className="rounded-full w-9 h-9 p-0 border border-[--blue-main]/30 bg-white text-[--blue-main] hover:bg-[--blue-light]"
+                  className="rounded-full w-8 h-8 sm:w-9 sm:h-9 p-0 border border-[--blue-main]/30 bg-white text-[--blue-main] hover:bg-[--blue-light]"
                 >
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
+                    width="14" 
+                    height="14" 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     stroke="currentColor" 

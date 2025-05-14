@@ -124,9 +124,9 @@ export default function HypertensionModule() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      {/* Barra lateral */}
-      <div className="w-[220px] bg-[--gray-light] border-r border-gray-200 py-4 px-2">
+    <div className="flex flex-col md:flex-row min-h-screen">
+      {/* Barra lateral - oculta en móviles, visible en tabletas y escritorio */}
+      <div className="hidden md:block md:w-[220px] bg-[--gray-light] border-r border-gray-200 py-4 px-2">
         <div className="mb-8 px-4">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 bg-[--red-alert] rounded-md flex items-center justify-center shadow-sm">
@@ -192,126 +192,224 @@ export default function HypertensionModule() {
         </nav>
       </div>
 
+      {/* Barra de navegación móvil - visible solo en móviles */}
+      <div className="md:hidden bg-white shadow-sm border-b border-gray-200 py-3 px-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 bg-[--red-alert] rounded-md flex items-center justify-center shadow-sm">
+              <svg 
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-white"
+              >
+                <path 
+                  d="M8 3.5C5.2 3.5 3 5.7 3 8.5C3 12 5.5 15 12 20.5C18.5 15 21 12 21 8.5C21 5.7 18.8 3.5 16 3.5C14.3 3.5 12.9 4.3 12 5.5C11.1 4.3 9.7 3.5 8 3.5Z" 
+                  stroke="currentColor" 
+                  strokeWidth="1.8" 
+                  fill="none"
+                />
+              </svg>
+            </div>
+            <span className="font-semibold text-[--blue-main]">CronApp</span>
+          </div>
+          
+          <div className="flex gap-2">
+            <a href="/patient-profile-new" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[--blue-light]">
+              <svg className="h-5 w-5 text-[--gray-medium]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </a>
+            
+            <a href="/diabetes" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[--blue-light]">
+              <svg className="h-5 w-5 text-[--gray-medium]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 10v12"></path>
+                <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"></path>
+              </svg>
+            </a>
+            
+            <a href="/hypertension" className="w-10 h-10 flex items-center justify-center rounded-full bg-[--blue-light]">
+              <svg className="h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="8 14 12 10 16 14"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
       {/* Contenido principal */}
-      <div className="flex-1 p-6 bg-[--gray-light]">
+      <div className="flex-1 p-4 md:p-6 bg-[--gray-light]">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-2xl font-bold mb-6 text-[--blue-main]">Módulo en proceso</h1>
 
           <Card className="mb-8 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
             <CardContent className="p-0">
-              <div className="p-4 border-b flex justify-between items-center bg-[--blue-light]/30">
-                <h2 className="text-lg font-medium text-[--blue-main]">{dateRangeText}</h2>
+              <div className="p-3 md:p-4 border-b flex flex-wrap justify-between items-center bg-[--blue-light]/30">
+                <h2 className="text-base md:text-lg font-medium text-[--blue-main] w-full sm:w-auto mb-2 sm:mb-0">{dateRangeText}</h2>
               </div>
 
-              <div className="p-6">
+              <div className="p-4 md:p-6">
                 {pressureReadings.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-12">
+                  <div className="flex flex-col items-center justify-center py-8 md:py-12">
                     <div className="relative mb-6">
                       {/* Imagen de portapapeles con mediciones */}
-                      <div className="w-40 h-48 bg-[--blue-light]/20 border border-[--blue-light] rounded-lg relative z-10 flex items-center justify-center shadow-sm">
-                        <div className="w-32 h-40 bg-white rounded-lg border border-[--blue-light]/50"></div>
-                      </div>
-                      <div className="absolute -top-6 right-20 z-20">
-                        
-                      </div>
-                      <div className="absolute -top-3 left-20 z-20">
-                        
+                      <div className="w-32 md:w-40 h-40 md:h-48 bg-[--blue-light]/20 border border-[--blue-light] rounded-lg relative z-10 flex items-center justify-center shadow-sm">
+                        <div className="w-24 md:w-32 h-32 md:h-40 bg-white rounded-lg border border-[--blue-light]/50"></div>
                       </div>
                     </div>
-                    <p className="text-[--black-soft] font-medium">No tenemos datos para mostrar</p>
-                    <p className="text-[--gray-medium] text-sm mt-1">Haz click aquí para poder agregar datos</p>
+                    <p className="text-[--black-soft] font-medium text-center">No tenemos datos para mostrar</p>
+                    <p className="text-[--gray-medium] text-sm mt-1 text-center">Haz click aquí para poder agregar datos</p>
                   </div>
                 ) : (
-                  <div className="h-64 relative">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart 
-                        data={pressureReadings.map(reading => ({
-                          ...reading,
-                          dayLabel: format(reading.date, "dd/MM"),
-                          formattedDate: format(reading.date, "dd/MM/yyyy")
-                        }))}
-                        margin={{ top: 5, right: 30, left: 5, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                        <XAxis 
-                          dataKey="dayLabel" 
-                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
-                          tickLine={false}
-                          axisLine={{ stroke: '#e5e5e5' }}
-                        />
-                        <YAxis 
-                          domain={[40, 200]}
-                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
-                          tickLine={false}
-                          axisLine={{ stroke: '#e5e5e5' }}
-                        />
-                        <Tooltip 
-                          formatter={(value: number, name: string) => {
-                            return [`${value} mmHg`, name === 'systolic' ? 'Sistólica' : 'Diastólica'];
+                  <div>
+                    {/* Altura adaptativa según el dispositivo */}
+                    <div className="h-52 sm:h-64 relative">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <ComposedChart 
+                          data={pressureReadings.map(reading => ({
+                            ...reading,
+                            dayLabel: format(reading.date, "dd/MM"),
+                            formattedDate: format(reading.date, "dd/MM/yyyy")
+                          }))}
+                          margin={{ 
+                            top: 20, 
+                            right: 30, 
+                            left: 5, 
+                            bottom: 5 
                           }}
-                          labelFormatter={(label) => `Fecha: ${label}`}
-                          contentStyle={{
-                            backgroundColor: 'white',
-                            border: '1px solid #e5e5e5',
-                            borderRadius: '4px',
-                            fontSize: '12px'
-                          }}
-                        />
-                        <Legend 
-                          iconType="circle" 
-                          iconSize={8}
-                          wrapperStyle={{ fontSize: '10px' }}
-                          payload={[
-                            { value: 'Sistólica', type: 'circle', color: 'var(--red-alert)' },
-                            { value: 'Diastólica', type: 'circle', color: 'var(--blue-main)' }
-                          ]}
-                        />
-                        
-                        {/* Líneas de referencia */}
-                        <ReferenceLine y={160} stroke="var(--red-alert)" strokeDasharray="3 3" label={{ value: "160 mmHg", fill: "var(--red-alert)", position: "right" }} />
-                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" label={{ value: "140 mmHg", fill: "var(--yellow-warning)", position: "right" }} />
-                        <ReferenceLine y={90} stroke="var(--blue-main)" strokeDasharray="3 3" label={{ value: "90 mmHg", fill: "var(--blue-main)", position: "right" }} />
-                        <ReferenceLine y={60} stroke="var(--blue-main)" strokeDasharray="3 3" label={{ value: "60 mmHg", fill: "var(--blue-main)", position: "right" }} />
-                        
-                        {/* Datos de systolic (sistólica) */}
-                        <Line
-                          type="monotone"
-                          dataKey="systolic"
-                          name="Sistólica"
-                          stroke="var(--red-alert)"
-                          dot={{ stroke: 'var(--red-alert)', strokeWidth: 2, r: 4, fill: 'white' }}
-                          activeDot={{ r: 6, stroke: 'var(--red-alert)', strokeWidth: 2, fill: 'white' }}
-                          strokeWidth={2}
-                        />
-                        
-                        {/* Datos de diastolic (diastólica) */}
-                        <Line
-                          type="monotone"
-                          dataKey="diastolic"
-                          name="Diastólica"
-                          stroke="var(--blue-main)"
-                          dot={{ stroke: 'var(--blue-main)', strokeWidth: 2, r: 4, fill: 'white' }}
-                          activeDot={{ r: 6, stroke: 'var(--blue-main)', strokeWidth: 2, fill: 'white' }}
-                          strokeWidth={2}
-                        />
-                      </ComposedChart>
-                    </ResponsiveContainer>
+                        >
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                          <XAxis 
+                            dataKey="dayLabel" 
+                            tick={{ fontSize: 9, fill: 'var(--gray-medium)' }}
+                            tickLine={false}
+                            axisLine={{ stroke: '#e5e5e5' }}
+                            height={30}
+                          />
+                          <YAxis 
+                            domain={[40, 200]}
+                            tick={{ fontSize: 9, fill: 'var(--gray-medium)' }}
+                            tickLine={false}
+                            axisLine={{ stroke: '#e5e5e5' }}
+                            width={30}
+                          />
+                          <Tooltip 
+                            formatter={(value: number, name: string) => {
+                              return [`${value} mmHg`, name === 'systolic' ? 'Sistólica' : 'Diastólica'];
+                            }}
+                            labelFormatter={(label) => `Fecha: ${label}`}
+                            contentStyle={{
+                              backgroundColor: 'white',
+                              border: '1px solid #e5e5e5',
+                              borderRadius: '4px',
+                              fontSize: '11px'
+                            }}
+                          />
+                          <Legend 
+                            align="center" 
+                            verticalAlign="top" 
+                            iconType="circle" 
+                            iconSize={8}
+                            wrapperStyle={{ 
+                              fontSize: '10px',
+                              paddingBottom: '5px'  
+                            }}
+                            payload={[
+                              { value: 'Sistólica', type: 'circle', color: 'var(--red-alert)' },
+                              { value: 'Diastólica', type: 'circle', color: 'var(--blue-main)' }
+                            ]}
+                          />
+                          
+                          {/* Líneas de referencia con etiquetas responsivas */}
+                          <ReferenceLine 
+                            y={160} 
+                            stroke="var(--red-alert)" 
+                            strokeDasharray="3 3" 
+                            label={{ 
+                              value: "160", 
+                              fill: "var(--red-alert)", 
+                              position: "right",
+                              fontSize: 9
+                            }} 
+                          />
+                          <ReferenceLine 
+                            y={140} 
+                            stroke="var(--yellow-warning)" 
+                            strokeDasharray="3 3" 
+                            label={{ 
+                              value: "140", 
+                              fill: "var(--yellow-warning)", 
+                              position: "right",
+                              fontSize: 9
+                            }} 
+                          />
+                          <ReferenceLine 
+                            y={90} 
+                            stroke="var(--blue-main)" 
+                            strokeDasharray="3 3" 
+                            label={{ 
+                              value: "90", 
+                              fill: "var(--blue-main)", 
+                              position: "right",
+                              fontSize: 9
+                            }} 
+                          />
+                          <ReferenceLine 
+                            y={60} 
+                            stroke="var(--blue-main)" 
+                            strokeDasharray="3 3" 
+                            label={{ 
+                              value: "60", 
+                              fill: "var(--blue-main)", 
+                              position: "right",
+                              fontSize: 9
+                            }} 
+                          />
+                          
+                          {/* Datos de systolic (sistólica) */}
+                          <Line
+                            type="monotone"
+                            dataKey="systolic"
+                            name="Sistólica"
+                            stroke="var(--red-alert)"
+                            dot={{ stroke: 'var(--red-alert)', strokeWidth: 2, r: 3, fill: 'white' }}
+                            activeDot={{ r: 5, stroke: 'var(--red-alert)', strokeWidth: 2, fill: 'white' }}
+                            strokeWidth={2}
+                          />
+                          
+                          {/* Datos de diastolic (diastólica) */}
+                          <Line
+                            type="monotone"
+                            dataKey="diastolic"
+                            name="Diastólica"
+                            stroke="var(--blue-main)"
+                            dot={{ stroke: 'var(--blue-main)', strokeWidth: 2, r: 3, fill: 'white' }}
+                            activeDot={{ r: 5, stroke: 'var(--blue-main)', strokeWidth: 2, fill: 'white' }}
+                            strokeWidth={2}
+                          />
+                        </ComposedChart>
+                      </ResponsiveContainer>
+                    </div>
                     
-                    {/* Leyenda */}
-                    <div className="absolute bottom-0 right-0 flex items-center gap-3 text-xs">
-                      <div className="flex items-center gap-1">
+                    {/* Leyenda responsiva */}
+                    <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-xs mt-2 mb-1">
+                      <div className="flex items-center gap-1 bg-[--green-success]/10 px-2 py-1 rounded-md">
                         <div className="w-3 h-3 bg-[--green-success] rounded-sm"></div>
                         <span className="text-[--gray-medium]">Normal</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 bg-[--yellow-warning]/10 px-2 py-1 rounded-md">
                         <div className="w-3 h-3 bg-[--yellow-warning] rounded-sm"></div>
                         <span className="text-[--gray-medium]">Elevada</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 bg-[--red-alert]/10 px-2 py-1 rounded-md">
                         <div className="w-3 h-3 bg-[--red-alert] rounded-sm"></div>
                         <span className="text-[--gray-medium]">Alta</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 bg-[--blue-main]/10 px-2 py-1 rounded-md">
                         <div className="w-3 h-3 bg-[--blue-main] rounded-sm"></div>
                         <span className="text-[--gray-medium]">Baja</span>
                       </div>
@@ -320,16 +418,16 @@ export default function HypertensionModule() {
                 )}
               </div>
 
-              <div className="px-4 py-3 flex justify-between bg-[--blue-light]/10">
+              <div className="px-3 sm:px-4 py-3 flex justify-between items-center bg-[--blue-light]/10">
                 <Button 
                   size="sm" 
                   onClick={goToPreviousWeek}
-                  className="rounded-full w-9 h-9 p-0 border border-[--blue-main]/30 bg-white text-[--blue-main] hover:bg-[--blue-light]"
+                  className="rounded-full w-8 h-8 sm:w-9 sm:h-9 p-0 border border-[--blue-main]/30 bg-white text-[--blue-main] hover:bg-[--blue-light]"
                 >
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
+                    width="14" 
+                    height="14" 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     stroke="currentColor" 
@@ -343,15 +441,17 @@ export default function HypertensionModule() {
                   <span className="sr-only">Anterior</span>
                 </Button>
                 
+                <span className="text-xs sm:text-sm text-[--gray-medium]">Navegar por semanas</span>
+                
                 <Button 
                   size="sm" 
                   onClick={goToNextWeek}
-                  className="rounded-full w-9 h-9 p-0 border border-[--blue-main]/30 bg-white text-[--blue-main] hover:bg-[--blue-light]"
+                  className="rounded-full w-8 h-8 sm:w-9 sm:h-9 p-0 border border-[--blue-main]/30 bg-white text-[--blue-main] hover:bg-[--blue-light]"
                 >
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
+                    width="14" 
+                    height="14" 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     stroke="currentColor" 

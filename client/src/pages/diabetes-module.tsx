@@ -25,7 +25,8 @@ import {
   Line,
   ReferenceLine,
   BarChart,
-  Bar
+  Bar,
+  Cell
 } from "recharts";
 
 // Datos de glucosa simulados para una semana
@@ -246,15 +247,9 @@ export default function DiabetesModule() {
                             fontSize: '12px'
                           }}
                         />
-                        <ReferenceLine y={180} stroke="var(--red-alert)" strokeDasharray="3 3" >
-                          <label position="right" value="180 mg/dL" fill="var(--red-alert)" fontSize={10} />
-                        </ReferenceLine>
-                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" >
-                          <label position="right" value="140 mg/dL" fill="var(--yellow-warning)" fontSize={10} />
-                        </ReferenceLine>
-                        <ReferenceLine y={70} stroke="var(--blue-main)" strokeDasharray="3 3" >
-                          <label position="right" value="70 mg/dL" fill="var(--blue-main)" fontSize={10} />
-                        </ReferenceLine>
+                        <ReferenceLine y={180} stroke="var(--red-alert)" strokeDasharray="3 3" label={{ value: "180 mg/dL", fill: "var(--red-alert)", position: "right" }} />
+                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" label={{ value: "140 mg/dL", fill: "var(--yellow-warning)", position: "right" }} />
+                        <ReferenceLine y={70} stroke="var(--blue-main)" strokeDasharray="3 3" label={{ value: "70 mg/dL", fill: "var(--blue-main)", position: "right" }} />
                         <Bar 
                           dataKey="value" 
                           name="Glucosa"
@@ -263,14 +258,16 @@ export default function DiabetesModule() {
                           radius={[4, 4, 0, 0]}
                           barSize={25}
                           fillOpacity={0.9}
-                          // Colorear las barras según el valor
-                          fill={(entry) => {
-                            if (entry.value > 180) return 'var(--red-alert)';
-                            if (entry.value > 140) return 'var(--yellow-warning)';
-                            if (entry.value < 70) return 'var(--red-alert)';
-                            return 'var(--green-success)';
-                          }}
-                        />
+                        >
+                          {glucoseReadings.map((entry, index) => {
+                            let color = 'var(--green-success)';
+                            if (entry.value > 180) color = 'var(--red-alert)';
+                            else if (entry.value > 140) color = 'var(--yellow-warning)';
+                            else if (entry.value < 70) color = 'var(--red-alert)';
+                            
+                            return <Cell key={`cell-${index}`} fill={color} />;
+                          })}
+                        </Bar>
                       </BarChart>
                     </ResponsiveContainer>
                     

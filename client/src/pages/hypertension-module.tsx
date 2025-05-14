@@ -15,6 +15,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { format, addDays, subDays } from "date-fns";
 import { es } from "date-fns/locale";
+import {
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  Legend,
+  ReferenceLine,
+  ComposedChart,
+  Bar,
+  Cell
+} from "recharts";
 
 // Datos de presión arterial simulados para una semana
 const mockPressureData = [
@@ -209,75 +223,79 @@ export default function HypertensionModule() {
                   </div>
                 ) : (
                   <div className="h-64 relative">
-                    {/* Rangos de referencia */}
-                    <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-                      <div className="h-1/5 border-t border-dashed border-[--red-alert]/50 relative">
-                        <span className="absolute -top-2.5 right-0 text-xs text-[--red-alert]">160/100</span>
-                      </div>
-                      <div className="h-1/4 border-t border-dashed border-[--yellow-warning]/50 relative">
-                        <span className="absolute -top-2.5 right-0 text-xs text-[--yellow-warning]">140/90</span>
-                      </div>
-                      <div className="h-1/3 border-t border-dashed border-[--green-success]/50 relative">
-                        <span className="absolute -top-2.5 right-0 text-xs text-[--green-success]">120/80</span>
-                      </div>
-                      <div className="h-1/4 border-t border-dashed border-[--blue-light]/50 relative">
-                        <span className="absolute -top-2.5 right-0 text-xs text-[--blue-main]">90/60</span>
-                      </div>
-                    </div>
-                    
-                    {/* Gráfico con lecturas */}
-                    <div className="grid grid-cols-7 gap-2 h-full relative z-10">
-                      {pressureReadings.map((reading, index) => {
-                        // Determinamos el color según el rango de presión arterial
-                        let systolicColor = "";
-                        let diastolicColor = "";
+                    <ResponsiveContainer width="100%" height="100%">
+                      <ComposedChart 
+                        data={pressureReadings.map(reading => ({
+                          ...reading,
+                          dayLabel: format(reading.date, "dd/MM"),
+                          formattedDate: format(reading.date, "dd/MM/yyyy")
+                        }))}
+                        margin={{ top: 5, right: 30, left: 5, bottom: 5 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                        <XAxis 
+                          dataKey="dayLabel" 
+                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                        />
+                        <YAxis 
+                          domain={[40, 200]}
+                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                        />
+                        <Tooltip 
+                          formatter={(value: number, name: string) => {
+                            return [`${value} mmHg`, name === 'systolic' ? 'Sistólica' : 'Diastólica'];
+                          }}
+                          labelFormatter={(label) => `Fecha: ${label}`}
+                          contentStyle={{
+                            backgroundColor: 'white',
+                            border: '1px solid #e5e5e5',
+                            borderRadius: '4px',
+                            fontSize: '12px'
+                          }}
+                        />
+                        <Legend 
+                          iconType="circle" 
+                          iconSize={8}
+                          wrapperStyle={{ fontSize: '10px' }}
+                          payload={[
+                            { value: 'Sistólica', type: 'circle', color: 'var(--red-alert)' },
+                            { value: 'Diastólica', type: 'circle', color: 'var(--blue-main)' }
+                          ]}
+                        />
                         
-                        // Colores para sistólica
-                        if (reading.systolic >= 160) {
-                          systolicColor = "bg-[--red-alert]";
-                        } else if (reading.systolic >= 140) {
-                          systolicColor = "bg-[--yellow-warning]";
-                        } else if (reading.systolic < 90) {
-                          systolicColor = "bg-[--blue-main]";
-                        } else {
-                          systolicColor = "bg-[--green-success]";
-                        }
+                        {/* Líneas de referencia */}
+                        <ReferenceLine y={160} stroke="var(--red-alert)" strokeDasharray="3 3" label={{ value: "160 mmHg", fill: "var(--red-alert)", position: "right" }} />
+                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" label={{ value: "140 mmHg", fill: "var(--yellow-warning)", position: "right" }} />
+                        <ReferenceLine y={90} stroke="var(--blue-main)" strokeDasharray="3 3" label={{ value: "90 mmHg", fill: "var(--blue-main)", position: "right" }} />
+                        <ReferenceLine y={60} stroke="var(--blue-main)" strokeDasharray="3 3" label={{ value: "60 mmHg", fill: "var(--blue-main)", position: "right" }} />
                         
-                        // Colores para diastólica
-                        if (reading.diastolic >= 100) {
-                          diastolicColor = "bg-[--red-alert]";
-                        } else if (reading.diastolic >= 90) {
-                          diastolicColor = "bg-[--yellow-warning]";
-                        } else if (reading.diastolic < 60) {
-                          diastolicColor = "bg-[--blue-main]";
-                        } else {
-                          diastolicColor = "bg-[--green-success]";
-                        }
+                        {/* Datos de systolic (sistólica) */}
+                        <Line
+                          type="monotone"
+                          dataKey="systolic"
+                          name="Sistólica"
+                          stroke="var(--red-alert)"
+                          dot={{ stroke: 'var(--red-alert)', strokeWidth: 2, r: 4, fill: 'white' }}
+                          activeDot={{ r: 6, stroke: 'var(--red-alert)', strokeWidth: 2, fill: 'white' }}
+                          strokeWidth={2}
+                        />
                         
-                        return (
-                          <div key={index} className="flex flex-col items-center justify-end h-full">
-                            <div className="w-full flex flex-col items-center gap-1">
-                              <div 
-                                className={`${systolicColor} w-full rounded-t-md shadow-sm transition-all duration-300 hover:brightness-90 opacity-80`} 
-                                style={{ height: `${(reading.systolic / 200) * 100}%` }}
-                                title={`Sistólica: ${reading.systolic} mmHg - ${format(reading.date, "dd/MM/yyyy")}`}
-                              ></div>
-                              <div 
-                                className={`${diastolicColor} w-full rounded-t-md shadow-sm transition-all duration-300 hover:brightness-90`} 
-                                style={{ height: `${(reading.diastolic / 200) * 100}%` }}
-                                title={`Diastólica: ${reading.diastolic} mmHg - ${format(reading.date, "dd/MM/yyyy")}`}
-                              ></div>
-                            </div>
-                            <div className="mt-1 text-center">
-                              <span className="text-xs font-medium" style={{ color: reading.systolic >= 140 ? 'var(--red-alert)' : 'var(--black-soft)' }}>{reading.systolic}</span>
-                              <span className="text-xs text-[--gray-medium]">/</span>
-                              <span className="text-xs font-medium" style={{ color: reading.diastolic >= 90 ? 'var(--red-alert)' : 'var(--blue-main)' }}>{reading.diastolic}</span>
-                              <div className="text-xs text-[--gray-medium]">{format(reading.date, "dd/MM")}</div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+                        {/* Datos de diastolic (diastólica) */}
+                        <Line
+                          type="monotone"
+                          dataKey="diastolic"
+                          name="Diastólica"
+                          stroke="var(--blue-main)"
+                          dot={{ stroke: 'var(--blue-main)', strokeWidth: 2, r: 4, fill: 'white' }}
+                          activeDot={{ r: 6, stroke: 'var(--blue-main)', strokeWidth: 2, fill: 'white' }}
+                          strokeWidth={2}
+                        />
+                      </ComposedChart>
+                    </ResponsiveContainer>
                     
                     {/* Leyenda */}
                     <div className="absolute bottom-0 right-0 flex items-center gap-3 text-xs">

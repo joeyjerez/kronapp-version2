@@ -591,36 +591,54 @@ export default function PatientProfileNew() {
                 <CardContent className="p-5">
                   <h3 className="text-sm font-medium text-[--blue-main] mb-4">Gráfico Semanal de Glucemia</h3>
                   
-                  {/* Simulación de gráfico con barras */}
-                  <div className="h-48 flex items-end justify-between">
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--red-alert] rounded-t" style={{height: '70%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Lun</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--yellow-warning] rounded-t" style={{height: '55%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Mar</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--green-success] rounded-t" style={{height: '40%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Mié</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--green-success] rounded-t" style={{height: '35%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Jue</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--yellow-warning] rounded-t" style={{height: '50%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Vie</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--yellow-warning] rounded-t" style={{height: '60%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Sáb</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--red-alert] rounded-t" style={{height: '80%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Dom</span>
-                    </div>
+                  {/* Gráfico de glucosa con barras interactivas */}
+                  <div className="h-48">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        data={glucoseData}
+                        margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                        <XAxis 
+                          dataKey="day" 
+                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                        />
+                        <YAxis 
+                          hide={false}
+                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                          tickFormatter={(value) => `${value}`}
+                        />
+                        <Tooltip
+                          formatter={(value: number) => [`${value} mg/dL`, 'Glucosa']}
+                          labelFormatter={(label) => `${label}`}
+                          contentStyle={{
+                            backgroundColor: 'white',
+                            border: '1px solid #e5e5e5',
+                            borderRadius: '4px',
+                            fontSize: '12px'
+                          }}
+                        />
+                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" />
+                        <ReferenceLine y={180} stroke="var(--red-alert)" strokeDasharray="3 3" />
+                        <ReferenceLine y={70} stroke="var(--blue-main)" strokeDasharray="3 3" />
+                        <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                          {
+                            glucoseData.map((entry, index) => {
+                              let color = 'var(--green-success)';
+                              if (entry.value < 70) color = 'var(--blue-main)';
+                              else if (entry.value > 180) color = 'var(--red-alert)';
+                              else if (entry.value > 140) color = 'var(--yellow-warning)';
+                              
+                              return <Cell key={`cell-${index}`} fill={color} />;
+                            })
+                          }
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
                   </div>
                 </CardContent>
               </Card>
@@ -629,36 +647,69 @@ export default function PatientProfileNew() {
                 <CardContent className="p-5">
                   <h3 className="text-sm font-medium text-[--blue-main] mb-4">Gráfico semanal de Presión sanguínea</h3>
                   
-                  {/* Simulación de gráfico con barras */}
-                  <div className="h-48 flex items-end justify-between">
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--yellow-warning] rounded-t" style={{height: '60%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Lun</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--yellow-warning] rounded-t" style={{height: '65%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Mar</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--yellow-warning] rounded-t" style={{height: '55%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Mié</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--green-success] rounded-t" style={{height: '45%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Jue</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--green-success] rounded-t" style={{height: '40%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Vie</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--yellow-warning] rounded-t" style={{height: '50%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Sáb</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-6 bg-[--yellow-warning] rounded-t" style={{height: '60%'}}></div>
-                      <span className="text-xs text-[--gray-medium]">Dom</span>
-                    </div>
+                  {/* Gráfico de presión arterial interactivo */}
+                  <div className="h-48">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={bloodPressureData}
+                        margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                        <XAxis 
+                          dataKey="day" 
+                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                        />
+                        <YAxis 
+                          hide={false}
+                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                          tickFormatter={(value) => `${value}`}
+                        />
+                        <Tooltip
+                          formatter={(value: number, name: string) => {
+                            return [`${value} mmHg`, name === 'systolic' ? 'Sistólica' : 'Diastólica'];
+                          }}
+                          labelFormatter={(label) => `${label}`}
+                          contentStyle={{
+                            backgroundColor: 'white',
+                            border: '1px solid #e5e5e5',
+                            borderRadius: '4px',
+                            fontSize: '12px'
+                          }}
+                        />
+                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" />
+                        <ReferenceLine y={90} stroke="var(--blue-main)" strokeDasharray="3 3" />
+                        
+                        <Line 
+                          type="monotone" 
+                          dataKey="systolic" 
+                          name="Sistólica"
+                          stroke="var(--red-alert)" 
+                          strokeWidth={2}
+                          dot={{ r: 4, stroke: 'var(--red-alert)', fill: 'white' }}
+                          activeDot={{ r: 5, stroke: 'var(--red-alert)', fill: 'white' }}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="diastolic" 
+                          name="Diastólica"
+                          stroke="var(--blue-main)" 
+                          strokeWidth={2}
+                          dot={{ r: 4, stroke: 'var(--blue-main)', fill: 'white' }}
+                          activeDot={{ r: 5, stroke: 'var(--blue-main)', fill: 'white' }}
+                        />
+                        
+                        <Legend 
+                          verticalAlign="top" 
+                          align="right"
+                          wrapperStyle={{ fontSize: '10px', paddingBottom: '10px' }} 
+                          formatter={(value) => value === 'systolic' ? 'Sistólica' : 'Diastólica'} 
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
                   </div>
                 </CardContent>
               </Card>

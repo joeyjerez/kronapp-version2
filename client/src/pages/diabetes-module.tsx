@@ -15,6 +15,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { format, addDays, subDays, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
+import {
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  ReferenceLine,
+  BarChart,
+  Bar
+} from "recharts";
 
 // Datos de glucosa simulados para una semana
 const mockGlucoseData = [
@@ -205,47 +217,62 @@ export default function DiabetesModule() {
                   </div>
                 ) : (
                   <div className="h-64 relative">
-                    {/* Rangos de referencia */}
-                    <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-                      <div className="h-1/4 border-t border-dashed border-[--red-alert]/50 relative">
-                        <span className="absolute -top-2.5 right-0 text-xs text-[--red-alert]">180 mg/dL</span>
-                      </div>
-                      <div className="h-1/3 border-t border-dashed border-[--green-success]/50 relative">
-                        <span className="absolute -top-2.5 right-0 text-xs text-[--green-success]">140 mg/dL</span>
-                      </div>
-                      <div className="h-1/4 border-t border-dashed border-[--yellow-warning]/50 relative">
-                        <span className="absolute -top-2.5 right-0 text-xs text-[--yellow-warning]">70 mg/dL</span>
-                      </div>
-                    </div>
-                    
-                    {/* Gráfico de barras con lecturas */}
-                    <div className="grid grid-cols-7 gap-2 h-full relative z-10">
-                      {glucoseReadings.map((reading, index) => {
-                        // Determinamos el color según el rango de glucosa
-                        let barColor = "";
-                        if (reading.value > 180) {
-                          barColor = "bg-[--red-alert]";
-                        } else if (reading.value > 140) {
-                          barColor = "bg-[--yellow-warning]";
-                        } else if (reading.value < 70) {
-                          barColor = "bg-[--red-alert]";
-                        } else {
-                          barColor = "bg-[--green-success]";
-                        }
-                        
-                        return (
-                          <div key={index} className="flex flex-col items-center justify-end h-full">
-                            <div 
-                              className={`${barColor} w-full rounded-t-md shadow-sm transition-all duration-300 hover:brightness-90`} 
-                              style={{ height: `${(reading.value / 250) * 100}%` }}
-                              title={`${reading.value} mg/dL - ${format(reading.date, "dd/MM/yyyy")}`}
-                            ></div>
-                            <span className="text-xs mt-1 font-medium text-[--black-soft]">{reading.value}</span>
-                            <span className="text-xs text-[--gray-medium]">{format(reading.date, "dd/MM")}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={glucoseReadings.map(reading => ({
+                        ...reading,
+                        dayLabel: format(reading.date, "dd/MM"),
+                        formattedDate: format(reading.date, "dd/MM/yyyy")
+                      }))}>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                        <XAxis 
+                          dataKey="dayLabel" 
+                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                        />
+                        <YAxis 
+                          domain={[0, 250]} 
+                          tick={{ fontSize: 10, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                        />
+                        <Tooltip 
+                          formatter={(value: number) => [`${value} mg/dL`, 'Glucosa']} 
+                          labelFormatter={(label) => `Fecha: ${label}`}
+                          contentStyle={{
+                            backgroundColor: 'white',
+                            border: '1px solid #e5e5e5',
+                            borderRadius: '4px',
+                            fontSize: '12px'
+                          }}
+                        />
+                        <ReferenceLine y={180} stroke="var(--red-alert)" strokeDasharray="3 3" >
+                          <label position="right" value="180 mg/dL" fill="var(--red-alert)" fontSize={10} />
+                        </ReferenceLine>
+                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" >
+                          <label position="right" value="140 mg/dL" fill="var(--yellow-warning)" fontSize={10} />
+                        </ReferenceLine>
+                        <ReferenceLine y={70} stroke="var(--blue-main)" strokeDasharray="3 3" >
+                          <label position="right" value="70 mg/dL" fill="var(--blue-main)" fontSize={10} />
+                        </ReferenceLine>
+                        <Bar 
+                          dataKey="value" 
+                          name="Glucosa"
+                          isAnimationActive={true}
+                          animationDuration={500}
+                          radius={[4, 4, 0, 0]}
+                          barSize={25}
+                          fillOpacity={0.9}
+                          // Colorear las barras según el valor
+                          fill={(entry) => {
+                            if (entry.value > 180) return 'var(--red-alert)';
+                            if (entry.value > 140) return 'var(--yellow-warning)';
+                            if (entry.value < 70) return 'var(--red-alert)';
+                            return 'var(--green-success)';
+                          }}
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
                     
                     {/* Leyenda */}
                     <div className="absolute bottom-0 right-0 flex items-center gap-4 text-xs">

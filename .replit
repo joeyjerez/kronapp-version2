@@ -26,10 +26,6 @@ author = "agent"
 task = "workflow.run"
 args = "Start application"
 
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "HTTP Server"
-
 [[workflows.workflow]]
 name = "Start application"
 author = "agent"
@@ -37,13 +33,4 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
-waitForPort = 5000
-
-[[workflows.workflow]]
-name = "HTTP Server"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "python -m http.server 5000"
 waitForPort = 5000

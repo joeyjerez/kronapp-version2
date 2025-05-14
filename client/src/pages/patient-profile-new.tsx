@@ -6,6 +6,22 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  ReferenceLine,
+  Area,
+  AreaChart,
+  Cell,
+  Legend
+} from 'recharts';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -138,6 +154,28 @@ export default function PatientProfileNew() {
       nextDose: "Mañana 8:00"
     }
   ]);
+  
+  // Datos para gráfico de glucosa
+  const glucoseData = [
+    { day: 'Lun', value: 105, date: '01/05' },
+    { day: 'Mar', value: 125, date: '02/05' },
+    { day: 'Mie', value: 115, date: '03/05' },
+    { day: 'Jue', value: 145, date: '04/05' },
+    { day: 'Vie', value: 130, date: '05/05' },
+    { day: 'Sab', value: 110, date: '06/05' },
+    { day: 'Dom', value: 125, date: '07/05' },
+  ];
+  
+  // Datos para gráfico de presión arterial
+  const bloodPressureData = [
+    { day: 'Lun', systolic: 120, diastolic: 80, date: '01/05' },
+    { day: 'Mar', systolic: 132, diastolic: 85, date: '02/05' },
+    { day: 'Mie', systolic: 128, diastolic: 83, date: '03/05' },
+    { day: 'Jue', systolic: 145, diastolic: 90, date: '04/05' },
+    { day: 'Vie', systolic: 138, diastolic: 88, date: '05/05' },
+    { day: 'Sab', systolic: 130, diastolic: 85, date: '06/05' },
+    { day: 'Dom', systolic: 135, diastolic: 87, date: '07/05' },
+  ];
   
   // Estado del formulario de nuevo medicamento
   const [newMedication, setNewMedication] = useState<Omit<Medication, "id" | "adherence">>({
@@ -655,17 +693,42 @@ export default function PatientProfileNew() {
                     </div>
                   </div>
                   
-                  {/* Mini gráfico de tendencia */}
-                  <div className="h-12 w-full bg-white rounded mb-3 p-2 border border-[--blue-light]">
-                    <div className="flex items-end justify-between h-full space-x-1">
-                      <div className="w-1/7 h-[30%] bg-[--blue-main] rounded-t"></div>
-                      <div className="w-1/7 h-[50%] bg-[--blue-main] rounded-t"></div>
-                      <div className="w-1/7 h-[40%] bg-[--blue-main] rounded-t"></div>
-                      <div className="w-1/7 h-[60%] bg-[--blue-main] rounded-t"></div>
-                      <div className="w-1/7 h-[70%] bg-[--blue-main] rounded-t"></div>
-                      <div className="w-1/7 h-[60%] bg-[--blue-main] rounded-t"></div>
-                      <div className="w-1/7 h-[80%] bg-[--blue-main] rounded-t"></div>
-                    </div>
+                  {/* Gráfico de tendencia interactivo */}
+                  <div className="h-24 w-full bg-white rounded mb-3 border border-[--blue-light]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart
+                        data={glucoseData}
+                        margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                        <XAxis 
+                          dataKey="day" 
+                          tick={{ fontSize: 9, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                        />
+                        <Tooltip
+                          formatter={(value: number) => [`${value} mg/dL`, 'Glucosa']}
+                          labelFormatter={(label) => `${label}`}
+                          contentStyle={{
+                            backgroundColor: 'white',
+                            border: '1px solid #e5e5e5',
+                            borderRadius: '4px',
+                            fontSize: '10px'
+                          }}
+                        />
+                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" />
+                        <ReferenceLine y={70} stroke="var(--blue-main)" strokeDasharray="3 3" />
+                        <Area 
+                          type="monotone" 
+                          dataKey="value" 
+                          stroke="var(--blue-main)" 
+                          fill="var(--blue-light)" 
+                          fillOpacity={0.4}
+                          activeDot={{ r: 4, stroke: 'var(--blue-main)', strokeWidth: 1, fill: 'white' }}
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
                   </div>
                   
                   <div className="flex justify-between items-center">
@@ -701,17 +764,55 @@ export default function PatientProfileNew() {
                     </div>
                   </div>
                   
-                  {/* Mini gráfico de tendencia */}
-                  <div className="h-12 w-full bg-white rounded mb-3 p-2 border border-[--blue-light]">
-                    <div className="flex items-end justify-between h-full space-x-1">
-                      <div className="w-1/7 h-[50%] bg-[--red-alert] rounded-t"></div>
-                      <div className="w-1/7 h-[60%] bg-[--red-alert] rounded-t"></div>
-                      <div className="w-1/7 h-[65%] bg-[--red-alert] rounded-t"></div>
-                      <div className="w-1/7 h-[70%] bg-[--red-alert] rounded-t"></div>
-                      <div className="w-1/7 h-[60%] bg-[--red-alert] rounded-t"></div>
-                      <div className="w-1/7 h-[75%] bg-[--red-alert] rounded-t"></div>
-                      <div className="w-1/7 h-[80%] bg-[--red-alert] rounded-t"></div>
-                    </div>
+                  {/* Gráfico de tendencia interactivo */}
+                  <div className="h-24 w-full bg-white rounded mb-3 border border-[--blue-light]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={bloodPressureData}
+                        margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                        <XAxis 
+                          dataKey="day" 
+                          tick={{ fontSize: 9, fill: 'var(--gray-medium)' }}
+                          tickLine={false}
+                          axisLine={{ stroke: '#e5e5e5' }}
+                        />
+                        <Tooltip
+                          formatter={(value: number, name: string) => {
+                            return [`${value} mmHg`, name === 'systolic' ? 'Sistólica' : 'Diastólica'];
+                          }}
+                          labelFormatter={(label) => `${label}`}
+                          contentStyle={{
+                            backgroundColor: 'white',
+                            border: '1px solid #e5e5e5',
+                            borderRadius: '4px',
+                            fontSize: '10px'
+                          }}
+                        />
+                        <ReferenceLine y={140} stroke="var(--yellow-warning)" strokeDasharray="3 3" />
+                        <ReferenceLine y={90} stroke="var(--blue-main)" strokeDasharray="3 3" />
+                        
+                        <Line 
+                          type="monotone" 
+                          dataKey="systolic" 
+                          name="Sistólica"
+                          stroke="var(--red-alert)" 
+                          strokeWidth={2}
+                          dot={{ r: 3, stroke: 'var(--red-alert)', fill: 'white' }}
+                          activeDot={{ r: 4, stroke: 'var(--red-alert)', fill: 'white' }}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="diastolic" 
+                          name="Diastólica"
+                          stroke="var(--blue-main)" 
+                          strokeWidth={2}
+                          dot={{ r: 3, stroke: 'var(--blue-main)', fill: 'white' }}
+                          activeDot={{ r: 4, stroke: 'var(--blue-main)', fill: 'white' }}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
                   </div>
                   
                   <div className="flex justify-between items-center">

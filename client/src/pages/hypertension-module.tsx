@@ -168,7 +168,7 @@ export default function HypertensionModule() {
             Diabetes
           </a>
 
-          <a href="/hypertension-module" className="flex items-center py-2 px-4 text-sm bg-[--blue-light] text-[--blue-main] font-medium rounded-md shadow-sm">
+          <a href="/hypertension" className="flex items-center py-2 px-4 text-sm bg-[--blue-light] text-[--blue-main] font-medium rounded-md shadow-sm">
             <svg className="mr-3 h-5 w-5 text-[--blue-main]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="8 14 12 10 16 14"></polyline>
